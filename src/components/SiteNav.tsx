@@ -21,10 +21,10 @@ export function SiteNav() {
         </Link>
         <nav className="flex items-center gap-1 sm:gap-2">
           <Link
-            to="/"
+            to="/groups"
             className="hidden rounded-full px-3 py-2 text-sm font-medium text-foreground/80 transition-colors hover:text-foreground sm:inline-block"
           >
-            Home
+            Groups
           </Link>
           {user ? (
             <>
