@@ -63,7 +63,7 @@ function Index() {
                 size="lg"
                 className="h-12 rounded-full px-6 text-base"
               >
-                <Link to="/login">Log in →</Link>
+                <Link to="/groups">Browse groups →</Link>
               </Button>
             </div>
           </div>
