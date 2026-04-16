@@ -55,7 +55,7 @@ function Index() {
                 size="lg"
                 className="h-12 rounded-full bg-gradient-brand px-8 text-base font-semibold text-foreground shadow-glow transition-transform hover:-translate-y-0.5 hover:opacity-95"
               >
-                <Link to="/">Start sharing your art</Link>
+                <Link to="/signup">Start sharing your art</Link>
               </Button>
               <Button
                 asChild
@@ -63,7 +63,7 @@ function Index() {
                 size="lg"
                 className="h-12 rounded-full px-6 text-base"
               >
-                <Link to="/">Explore makers →</Link>
+                <Link to="/login">Log in →</Link>
               </Button>
             </div>
           </div>
