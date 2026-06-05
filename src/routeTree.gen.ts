@@ -21,9 +21,8 @@ import { Route as WaitlistRouteImport } from './routes/waitlist'
 import { Route as ConfirmEmailRouteImport } from './routes/confirm-email'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
-import { Route as AiMatchRouteImport } from './routes/ai-match'
-import { Route as MatchHistoryRouteImport } from './routes/match-history'
 import { Route as ProfileUserIdRouteImport } from './routes/profile.$userId'
+import { Route as UpgradeRouteImport } from './routes/upgrade'
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -85,19 +84,14 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
   path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AiMatchRoute = AiMatchRouteImport.update({
-  id: '/ai-match',
-  path: '/ai-match',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MatchHistoryRoute = MatchHistoryRouteImport.update({
-  id: '/match-history',
-  path: '/match-history',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ProfileUserIdRoute = ProfileUserIdRouteImport.update({
   id: '/profile/$userId',
   path: '/profile/$userId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UpgradeRoute = UpgradeRouteImport.update({
+  id: '/upgrade',
+  path: '/upgrade',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -114,9 +108,8 @@ export interface FileRoutesByFullPath {
   '/confirm-email': typeof ConfirmEmailRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/reset-password': typeof ResetPasswordRoute
-  '/ai-match': typeof AiMatchRoute
-  '/match-history': typeof MatchHistoryRoute
   '/profile/$userId': typeof ProfileUserIdRoute
+  '/upgrade': typeof UpgradeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -131,9 +124,8 @@ export interface FileRoutesByTo {
   '/confirm-email': typeof ConfirmEmailRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/reset-password': typeof ResetPasswordRoute
-  '/ai-match': typeof AiMatchRoute
-  '/match-history': typeof MatchHistoryRoute
   '/profile/$userId': typeof ProfileUserIdRoute
+  '/upgrade': typeof UpgradeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -149,9 +141,8 @@ export interface FileRoutesById {
   '/confirm-email': typeof ConfirmEmailRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/reset-password': typeof ResetPasswordRoute
-  '/ai-match': typeof AiMatchRoute
-  '/match-history': typeof MatchHistoryRoute
   '/profile/$userId': typeof ProfileUserIdRoute
+  '/upgrade': typeof UpgradeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -168,9 +159,8 @@ export interface FileRouteTypes {
     | '/confirm-email'
     | '/forgot-password'
     | '/reset-password'
-    | '/ai-match'
-    | '/match-history'
     | '/profile/$userId'
+    | '/upgrade'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -185,9 +175,8 @@ export interface FileRouteTypes {
     | '/confirm-email'
     | '/forgot-password'
     | '/reset-password'
-    | '/ai-match'
-    | '/match-history'
     | '/profile/$userId'
+    | '/upgrade'
   id:
     | '__root__'
     | '/'
@@ -202,9 +191,8 @@ export interface FileRouteTypes {
     | '/confirm-email'
     | '/forgot-password'
     | '/reset-password'
-    | '/ai-match'
-    | '/match-history'
     | '/profile/$userId'
+    | '/upgrade'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -220,137 +208,44 @@ export interface RootRouteChildren {
   ConfirmEmailRoute: typeof ConfirmEmailRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
-  AiMatchRoute: typeof AiMatchRoute
-  MatchHistoryRoute: typeof MatchHistoryRoute
   ProfileUserIdRoute: typeof ProfileUserIdRoute
+  UpgradeRoute: typeof UpgradeRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/signup': {
-      id: '/signup'
-      path: '/signup'
-      fullPath: '/signup'
-      preLoaderRoute: typeof SignupRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/groups': {
-      id: '/groups'
-      path: '/groups'
-      fullPath: '/groups'
-      preLoaderRoute: typeof GroupsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/dashboard': {
-      id: '/dashboard'
-      path: '/dashboard'
-      fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/post/$postId': {
-      id: '/post/$postId'
-      path: '/post/$postId'
-      fullPath: '/post/$postId'
-      preLoaderRoute: typeof PostPostIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/g/$slug': {
-      id: '/g/$slug'
-      path: '/g/$slug'
-      fullPath: '/g/$slug'
-      preLoaderRoute: typeof GSlugRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/terms': {
-      id: '/terms'
-      path: '/terms'
-      fullPath: '/terms'
-      preLoaderRoute: typeof TermsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/waitlist': {
-      id: '/waitlist'
-      path: '/waitlist'
-      fullPath: '/waitlist'
-      preLoaderRoute: typeof WaitlistRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/confirm-email': {
-      id: '/confirm-email'
-      path: '/confirm-email'
-      fullPath: '/confirm-email'
-      preLoaderRoute: typeof ConfirmEmailRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/forgot-password': {
-      id: '/forgot-password'
-      path: '/forgot-password'
-      fullPath: '/forgot-password'
-      preLoaderRoute: typeof ForgotPasswordRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/reset-password': {
-      id: '/reset-password'
-      path: '/reset-password'
-      fullPath: '/reset-password'
-      preLoaderRoute: typeof ResetPasswordRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/ai-match': {
-      id: '/ai-match'
-      path: '/ai-match'
-      fullPath: '/ai-match'
-      preLoaderRoute: typeof AiMatchRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/match-history': {
-      id: '/match-history'
-      path: '/match-history'
-      fullPath: '/match-history'
-      preLoaderRoute: typeof MatchHistoryRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/profile/$userId': {
-      id: '/profile/$userId'
-      path: '/profile/$userId'
-      fullPath: '/profile/$userId'
-      preLoaderRoute: typeof ProfileUserIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
+    '/signup': { id: '/signup'; path: '/signup'; fullPath: '/signup'; preLoaderRoute: typeof SignupRouteImport; parentRoute: typeof rootRouteImport }
+    '/login': { id: '/login'; path: '/login'; fullPath: '/login'; preLoaderRoute: typeof LoginRouteImport; parentRoute: typeof rootRouteImport }
+    '/groups': { id: '/groups'; path: '/groups'; fullPath: '/groups'; preLoaderRoute: typeof GroupsRouteImport; parentRoute: typeof rootRouteImport }
+    '/dashboard': { id: '/dashboard'; path: '/dashboard'; fullPath: '/dashboard'; preLoaderRoute: typeof DashboardRouteImport; parentRoute: typeof rootRouteImport }
+    '/': { id: '/'; path: '/'; fullPath: '/'; preLoaderRoute: typeof IndexRouteImport; parentRoute: typeof rootRouteImport }
+    '/post/$postId': { id: '/post/$postId'; path: '/post/$postId'; fullPath: '/post/$postId'; preLoaderRoute: typeof PostPostIdRouteImport; parentRoute: typeof rootRouteImport }
+    '/g/$slug': { id: '/g/$slug'; path: '/g/$slug'; fullPath: '/g/$slug'; preLoaderRoute: typeof GSlugRouteImport; parentRoute: typeof rootRouteImport }
+    '/terms': { id: '/terms'; path: '/terms'; fullPath: '/terms'; preLoaderRoute: typeof TermsRouteImport; parentRoute: typeof rootRouteImport }
+    '/waitlist': { id: '/waitlist'; path: '/waitlist'; fullPath: '/waitlist'; preLoaderRoute: typeof WaitlistRouteImport; parentRoute: typeof rootRouteImport }
+    '/confirm-email': { id: '/confirm-email'; path: '/confirm-email'; fullPath: '/confirm-email'; preLoaderRoute: typeof ConfirmEmailRouteImport; parentRoute: typeof rootRouteImport }
+    '/forgot-password': { id: '/forgot-password'; path: '/forgot-password'; fullPath: '/forgot-password'; preLoaderRoute: typeof ForgotPasswordRouteImport; parentRoute: typeof rootRouteImport }
+    '/reset-password': { id: '/reset-password'; path: '/reset-password'; fullPath: '/reset-password'; preLoaderRoute: typeof ResetPasswordRouteImport; parentRoute: typeof rootRouteImport }
+    '/profile/$userId': { id: '/profile/$userId'; path: '/profile/$userId'; fullPath: '/profile/$userId'; preLoaderRoute: typeof ProfileUserIdRouteImport; parentRoute: typeof rootRouteImport }
+    '/upgrade': { id: '/upgrade'; path: '/upgrade'; fullPath: '/upgrade'; preLoaderRoute: typeof UpgradeRouteImport; parentRoute: typeof rootRouteImport }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  DashboardRoute: DashboardRoute,
-  GroupsRoute: GroupsRoute,
-  LoginRoute: LoginRoute,
-  SignupRoute: SignupRoute,
-  GSlugRoute: GSlugRoute,
-  PostPostIdRoute: PostPostIdRoute,
-  TermsRoute: TermsRoute,
-  WaitlistRoute: WaitlistRoute,
-  ConfirmEmailRoute: ConfirmEmailRoute,
-  ForgotPasswordRoute: ForgotPasswordRoute,
-  ResetPasswordRoute: ResetPasswordRoute,
-  AiMatchRoute: AiMatchRoute,
-  MatchHistoryRoute: MatchHistoryRoute,
-  ProfileUserIdRoute: ProfileUserIdRoute,
+  IndexRoute,
+  DashboardRoute,
+  GroupsRoute,
+  LoginRoute,
+  SignupRoute,
+  GSlugRoute,
+  PostPostIdRoute,
+  TermsRoute,
+  WaitlistRoute,
+  ConfirmEmailRoute,
+  ForgotPasswordRoute,
+  ResetPasswordRoute,
+  ProfileUserIdRoute,
+  UpgradeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -1,5 +1,4 @@
 import { Link, useNavigate } from "@tanstack/react-router";
-import { Settings2, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/auth-context";
 
@@ -29,20 +28,6 @@ export function SiteNav() {
           </Link>
           {user ? (
             <>
-              <Link
-                to="/ai-match"
-                title="AI Match"
-                className="hidden sm:flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-              >
-                <Settings2 className="h-4 w-4" />
-              </Link>
-              <Link
-                to="/match-history"
-                title="Match History"
-                className="hidden sm:flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
-              >
-                <Clock className="h-4 w-4" />
-              </Link>
               <Button asChild variant="ghost" className="rounded-full">
                 <Link to="/dashboard">Dashboard</Link>
               </Button>

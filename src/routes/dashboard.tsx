@@ -1,6 +1,6 @@
 import * as React from "react";
 import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
-import { Loader2, Plus, Settings2, Clock } from "lucide-react";
+import { Loader2, Plus, Clock } from "lucide-react";
 
 import { useAuth } from "@/lib/auth-context";
 import { supabase } from "@/integrations/supabase/client";
@@ -60,7 +60,7 @@ function DashboardPage() {
       awarded_date: today,
       coins: 1,
     });
-    // Only update coin count on the first login of the day (no duplicate error)
+    // Only update coin count on first login of the day (no duplicate error)
     if (!error) {
       const { data } = await supabase
         .from("profiles")
@@ -138,24 +138,17 @@ function DashboardPage() {
               <Plus className="h-4 w-4" /> New post
             </Button>
             <Button asChild variant="outline" className="rounded-full">
-              <Link to="/ai-match">
-                <Settings2 className="mr-1.5 h-4 w-4" /> AI Match
-              </Link>
-            </Button>
-            <Button asChild variant="outline" className="rounded-full">
-              <Link to="/match-history">
-                <Clock className="mr-1.5 h-4 w-4" /> Match History
-              </Link>
-            </Button>
-            <Button asChild variant="outline" className="rounded-full">
               <Link to="/groups">Browse groups</Link>
+            </Button>
+            <Button asChild variant="outline" className="rounded-full">
+              <Link to={`/profile/${user.id}`}>My Profile</Link>
             </Button>
           </div>
         </div>
 
         {composerOpen && (
           <div className="mt-6">
-            <PostComposer />
+            <PostComposer onPost={() => { setComposerOpen(false); reload(); }} />
           </div>
         )}
 
@@ -187,7 +180,7 @@ function DashboardPage() {
           ) : (
             <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {posts.map((p) => (
-                <PostCard key={p.id} post={p} />
+                <PostCard key={p.id} post={p} onLike={reload} />
               ))}
             </div>
           )}
