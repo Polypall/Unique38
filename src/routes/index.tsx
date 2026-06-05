@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { SiteNav } from "@/components/SiteNav";
-import { Palette, Users, CalendarHeart } from "lucide-react";
+import { Palette, Users, CalendarHeart, Settings2 } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -63,7 +63,7 @@ function Index() {
                 size="lg"
                 className="h-12 rounded-full px-6 text-base"
               >
-                <Link to="/groups">Browse groups →</Link>
+                <Link to="/waitlist">Join the waitlist →</Link>
               </Button>
             </div>
           </div>
@@ -99,9 +99,28 @@ function Index() {
         </div>
       </section>
 
+      {/* AI Match CTA */}
+      <section className="pb-16">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="rounded-3xl bg-gradient-brand p-10 text-center shadow-glow">
+            <Settings2 className="mx-auto mb-4 h-12 w-12 text-white/80" />
+            <h2 className="font-display text-3xl font-semibold text-white">AI Match — Connect in 20 seconds</h2>
+            <p className="mx-auto mt-3 max-w-xl text-white/80">
+              Our screw-icon AI Match feature connects you live with inventors, investors, and startups in your field. A 20-second video call — fast, focused, real.
+            </p>
+            <Button asChild size="lg" className="mt-6 rounded-full bg-white px-8 text-base font-semibold text-brand-purple shadow hover:opacity-90">
+              <Link to="/signup">Get started →</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
+
       <footer className="border-t border-border/60 py-8">
         <div className="mx-auto max-w-6xl px-4 text-center text-sm text-muted-foreground sm:px-6">
-          © {new Date().getFullYear()} Unique — made for makers.
+          © {new Date().getFullYear()} Unique — made for makers. ·{" "}
+          <Link to="/terms" className="underline underline-offset-4 hover:text-foreground">Terms</Link>
+          {" "}·{" "}
+          <Link to="/waitlist" className="underline underline-offset-4 hover:text-foreground">Waitlist</Link>
         </div>
       </footer>
     </div>

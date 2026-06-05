@@ -61,33 +61,37 @@
   --color-sidebar-ring: var(--sidebar-ring);
   --color-brand-blue: var(--brand-blue);
   --color-brand-pink: var(--brand-pink);
+  --color-brand-purple: var(--brand-purple);
+  --color-brand-yellow: var(--brand-yellow);
   --font-display: "Fraunces", ui-serif, Georgia, serif;
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
 }
 
 :root {
   --radius: 1rem;
-  /* Brand: sky blue #91C4F6 and pink #FE95F6 */
-  --background: oklch(0.99 0.01 280);
-  --foreground: oklch(0.25 0.05 280);
+  /* Brand: purple, yellow, blue */
+  --background: oklch(0.97 0.015 290);
+  --foreground: oklch(0.2 0.05 280);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.25 0.05 280);
+  --card-foreground: oklch(0.2 0.05 280);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.25 0.05 280);
-  --primary: oklch(0.78 0.12 245);
-  --primary-foreground: oklch(0.2 0.04 280);
-  --secondary: oklch(0.78 0.18 340);
+  --popover-foreground: oklch(0.2 0.05 280);
+  --primary: oklch(0.6 0.22 290);
+  --primary-foreground: oklch(0.98 0 0);
+  --secondary: oklch(0.88 0.18 95);
   --secondary-foreground: oklch(0.2 0.04 280);
-  --muted: oklch(0.96 0.02 280);
+  --muted: oklch(0.95 0.02 290);
   --muted-foreground: oklch(0.5 0.03 280);
-  --accent: oklch(0.94 0.05 340);
+  --accent: oklch(0.94 0.06 290);
   --accent-foreground: oklch(0.25 0.05 280);
-  --brand-blue: oklch(0.81 0.11 245);
+  --brand-blue: oklch(0.7 0.15 245);
   --brand-pink: oklch(0.78 0.18 340);
-  --gradient-brand: linear-gradient(135deg, #91C4F6 0%, #FE95F6 100%);
-  --gradient-soft: linear-gradient(135deg, oklch(0.97 0.04 245) 0%, oklch(0.96 0.05 340) 100%);
-  --shadow-soft: 0 10px 40px -10px color-mix(in oklab, #91C4F6 35%, transparent);
-  --shadow-glow: 0 20px 60px -15px color-mix(in oklab, #FE95F6 40%, transparent);
+  --brand-purple: oklch(0.6 0.22 290);
+  --brand-yellow: oklch(0.88 0.18 95);
+  --gradient-brand: linear-gradient(135deg, #7C3AED 0%, #FBBF24 100%);
+  --gradient-soft: linear-gradient(135deg, oklch(0.95 0.06 290) 0%, oklch(0.95 0.05 245) 100%);
+  --shadow-soft: 0 10px 40px -10px color-mix(in oklab, #7C3AED 30%, transparent);
+  --shadow-glow: 0 20px 60px -15px color-mix(in oklab, #7C3AED 35%, transparent);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
   --border: oklch(0.929 0.013 255.508);
