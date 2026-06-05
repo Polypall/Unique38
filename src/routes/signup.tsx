@@ -1,7 +1,7 @@
 import * as React from "react";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
-import { Loader2, Palette, TrendingUp, Rocket, FlaskConical, Eye, EyeOff } from "lucide-react";
+import { Loader2, Palette, ShoppingBag, Store, Eye, EyeOff } from "lucide-react";
 
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth-context";
@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 const BG_URL = "https://i.postimg.cc/J4kbZbfm/bg.png";
 const CHICKEN_URL = "https://i.postimg.cc/g0VK0RHc/d3ec0be6-cf29-422a-b1c0-fc2ebb1ef620-removebg-preview.png";
 
-type AccountType = "artist" | "inventor" | "investor" | "startup";
+type AccountType = "artist" | "buyer" | "seller";
 
 const ACCOUNT_OPTIONS: {
   value: AccountType;
@@ -22,9 +22,8 @@ const ACCOUNT_OPTIONS: {
   icon: typeof Palette;
 }[] = [
   { value: "artist", label: "Artist / Maker", desc: "Share what I craft", icon: Palette },
-  { value: "inventor", label: "Inventor", desc: "Building new things", icon: FlaskConical },
-  { value: "investor", label: "Investor", desc: "Funding great ideas", icon: TrendingUp },
-  { value: "startup", label: "Startup", desc: "Growing a product", icon: Rocket },
+  { value: "buyer", label: "Buyer", desc: "Discover & collect art", icon: ShoppingBag },
+  { value: "seller", label: "Seller", desc: "Vend at events & online", icon: Store },
 ];
 
 export const Route = createFileRoute("/signup")({
@@ -32,7 +31,7 @@ export const Route = createFileRoute("/signup")({
   head: () => ({
     meta: [
       { title: "Sign up — Unique" },
-      { name: "description", content: "Join Unique — a social home for hand-crafting artists, inventors, investors, and makers." },
+      { name: "description", content: "Join Unique — a social home for hand-crafting artists, buyers, and sellers." },
     ],
   }),
 });
@@ -49,9 +48,7 @@ function SignupPage() {
   const [submitting, setSubmitting] = React.useState(false);
 
   React.useEffect(() => {
-    if (!authLoading && session) {
-      navigate({ to: "/dashboard" });
-    }
+    if (!authLoading && session) navigate({ to: "/dashboard" });
   }, [session, authLoading, navigate]);
 
   async function onSubmit(e: React.FormEvent) {
@@ -70,11 +67,7 @@ function SignupPage() {
       password,
       options: {
         emailRedirectTo: `${window.location.origin}/dashboard`,
-        data: {
-          display_name: displayName,
-          account_type: accountType,
-          profile_type: accountType,
-        },
+        data: { display_name: displayName, account_type: accountType },
       },
     });
     if (error) {
@@ -82,13 +75,11 @@ function SignupPage() {
       toast.error(error.message);
       return;
     }
-    // Write initial profile row
     if (data.user) {
       await supabase.from("profiles").upsert({
         id: data.user.id,
         display_name: displayName,
         account_type: accountType,
-        profile_type: accountType,
         coin_count: 0,
       });
     }
@@ -105,28 +96,20 @@ function SignupPage() {
 
       <div className="relative mx-auto flex min-h-screen max-w-md flex-col items-center justify-center px-4 py-12">
         <Link to="/" className="mb-6 flex items-center gap-2.5">
-          <img
-            src={CHICKEN_URL}
-            alt="Space Chicken mascot"
-            className="h-12 w-12 object-contain drop-shadow-lg"
-          />
-          <span className="font-display text-2xl font-semibold text-foreground drop-shadow-sm">
-            Unique
-          </span>
+          <img src={CHICKEN_URL} alt="Unique mascot" className="h-12 w-12 object-contain drop-shadow-lg" />
+          <span className="font-display text-2xl font-semibold text-foreground drop-shadow-sm">Unique</span>
         </Link>
 
         <div className="w-full rounded-3xl border border-border/60 bg-card/85 p-7 shadow-glow backdrop-blur-xl">
           <div className="mb-6 text-center">
             <h1 className="font-display text-3xl font-semibold">Join Unique</h1>
-            <p className="mt-1.5 text-sm text-muted-foreground">
-              Every maker has a place here — no experience required.
-            </p>
+            <p className="mt-1.5 text-sm text-muted-foreground">Every maker has a place here.</p>
           </div>
 
           <form onSubmit={onSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label>I'm joining as a…</Label>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="grid grid-cols-3 gap-2">
                 {ACCOUNT_OPTIONS.map(({ value, label, desc, icon: Icon }) => {
                   const active = accountType === value;
                   return (
@@ -201,7 +184,6 @@ function SignupPage() {
               </div>
             </div>
 
-            {/* Terms agreement */}
             <label className="flex items-start gap-3 cursor-pointer">
               <input
                 type="checkbox"
@@ -211,11 +193,7 @@ function SignupPage() {
               />
               <span className="text-xs text-muted-foreground leading-relaxed">
                 I agree to the{" "}
-                <Link
-                  to="/terms"
-                  target="_blank"
-                  className="text-foreground underline underline-offset-4 hover:opacity-80"
-                >
+                <Link to="/terms" target="_blank" className="text-foreground underline underline-offset-4 hover:opacity-80">
                   Terms and Conditions
                 </Link>
               </span>

@@ -1,6 +1,6 @@
 import * as React from "react";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { Wrench, Bell, Camera, Loader2, ExternalLink } from "lucide-react";
+import { createFileRoute, useNavigate, Link } from "@tanstack/react-router";
+import { Wrench, Bell, Camera, Loader2, ExternalLink, Crown } from "lucide-react";
 import { toast } from "sonner";
 
 import { supabase } from "@/integrations/supabase/client";
@@ -50,6 +50,7 @@ function ProfilePage() {
   const [following, setFollowing] = React.useState(false);
   const [editing, setEditing] = React.useState(false);
   const [saving, setSaving] = React.useState(false);
+  const isPremium = false; // TODO: wire to Stripe subscription status
 
   // Edit form state
   const [bio, setBio] = React.useState("");
@@ -250,9 +251,24 @@ function ProfilePage() {
                   </div>
                   <div className="mt-4 flex flex-wrap gap-2">
                     {isOwnProfile ? (
-                      <Button onClick={() => setEditing(true)} variant="outline" className="rounded-full text-sm">
-                        Edit Profile
-                      </Button>
+                      <div className="flex flex-wrap gap-2">
+                        <Button onClick={() => setEditing(true)} variant="outline" className="rounded-full text-sm">
+                          Edit Profile
+                        </Button>
+                        {!isPremium && (
+                          <Link
+                            to="/upgrade"
+                            className="inline-flex h-9 items-center gap-1.5 rounded-full bg-gradient-brand px-4 text-sm font-semibold text-white shadow-soft hover:opacity-90"
+                          >
+                            <Crown className="h-3.5 w-3.5" /> Upgrade — $5/mo
+                          </Link>
+                        )}
+                        {isPremium && (
+                          <span className="inline-flex h-9 items-center gap-1.5 rounded-full bg-yellow-100 px-4 text-sm font-semibold text-yellow-700">
+                            <Crown className="h-3.5 w-3.5" /> Premium
+                          </span>
+                        )}
+                      </div>
                     ) : (
                       <>
                         <button
