@@ -1,7 +1,7 @@
 import * as React from "react";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { toast } from "sonner";
-import { Loader2, Palette, ShoppingBag, Store } from "lucide-react";
+import { Loader2, Palette, TrendingUp, Rocket, FlaskConical, Eye, EyeOff } from "lucide-react";
 
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth-context";
@@ -10,10 +10,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 
-const BG_URL = "https://i.postimg.cc/vZrvnWpq/opt3.jpg";
-const LOGO_URL = "https://i.postimg.cc/W3V2QG5t/In-Shot-20251108-192211830.jpg";
+const BG_URL = "https://i.postimg.cc/J4kbZbfm/bg.png";
+const CHICKEN_URL = "https://i.postimg.cc/g0VK0RHc/d3ec0be6-cf29-422a-b1c0-fc2ebb1ef620-removebg-preview.png";
 
-type AccountType = "artist" | "buyer" | "seller";
+type AccountType = "artist" | "inventor" | "investor" | "startup";
 
 const ACCOUNT_OPTIONS: {
   value: AccountType;
@@ -21,24 +21,10 @@ const ACCOUNT_OPTIONS: {
   desc: string;
   icon: typeof Palette;
 }[] = [
-  {
-    value: "artist",
-    label: "Artist / Maker",
-    desc: "Share what you craft",
-    icon: Palette,
-  },
-  {
-    value: "buyer",
-    label: "Buyer",
-    desc: "Discover & collect art",
-    icon: ShoppingBag,
-  },
-  {
-    value: "seller",
-    label: "Seller",
-    desc: "Vend at events & online",
-    icon: Store,
-  },
+  { value: "artist", label: "Artist / Maker", desc: "Share what I craft", icon: Palette },
+  { value: "inventor", label: "Inventor", desc: "Building new things", icon: FlaskConical },
+  { value: "investor", label: "Investor", desc: "Funding great ideas", icon: TrendingUp },
+  { value: "startup", label: "Startup", desc: "Growing a product", icon: Rocket },
 ];
 
 export const Route = createFileRoute("/signup")({
@@ -46,11 +32,7 @@ export const Route = createFileRoute("/signup")({
   head: () => ({
     meta: [
       { title: "Sign up — Unique" },
-      {
-        name: "description",
-        content:
-          "Join Unique — a social home for hand-crafting artists, buyers, and sellers.",
-      },
+      { name: "description", content: "Join Unique — a social home for hand-crafting artists, inventors, investors, and makers." },
     ],
   }),
 });
@@ -61,7 +43,9 @@ function SignupPage() {
   const [displayName, setDisplayName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [showPassword, setShowPassword] = React.useState(false);
   const [accountType, setAccountType] = React.useState<AccountType>("artist");
+  const [agreedToTerms, setAgreedToTerms] = React.useState(false);
   const [submitting, setSubmitting] = React.useState(false);
 
   React.useEffect(() => {
@@ -72,12 +56,16 @@ function SignupPage() {
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (password.length < 6) {
-      toast.error("Password must be at least 6 characters.");
+    if (password.length < 8) {
+      toast.error("Password must be at least 8 characters.");
+      return;
+    }
+    if (!agreedToTerms) {
+      toast.error("Please agree to the Terms and Conditions to continue.");
       return;
     }
     setSubmitting(true);
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -85,17 +73,27 @@ function SignupPage() {
         data: {
           display_name: displayName,
           account_type: accountType,
+          profile_type: accountType,
         },
       },
     });
-    setSubmitting(false);
-
     if (error) {
+      setSubmitting(false);
       toast.error(error.message);
       return;
     }
-    toast.success("Account created! Welcome to Unique.");
-    navigate({ to: "/dashboard" });
+    // Write initial profile row
+    if (data.user) {
+      await supabase.from("profiles").upsert({
+        id: data.user.id,
+        display_name: displayName,
+        account_type: accountType,
+        profile_type: accountType,
+        coin_count: 0,
+      });
+    }
+    setSubmitting(false);
+    navigate({ to: "/confirm-email" });
   }
 
   return (
@@ -103,14 +101,14 @@ function SignupPage() {
       className="relative min-h-screen bg-cover bg-center"
       style={{ backgroundImage: `url(${BG_URL})` }}
     >
-      <div className="absolute inset-0 bg-gradient-to-b from-background/30 via-background/40 to-background/70" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background/40 via-background/50 to-background/80" />
 
       <div className="relative mx-auto flex min-h-screen max-w-md flex-col items-center justify-center px-4 py-12">
         <Link to="/" className="mb-6 flex items-center gap-2.5">
           <img
-            src={LOGO_URL}
-            alt="Unique logo"
-            className="h-12 w-12 rounded-full object-cover ring-2 ring-brand-pink/50 shadow-soft"
+            src={CHICKEN_URL}
+            alt="Space Chicken mascot"
+            className="h-12 w-12 object-contain drop-shadow-lg"
           />
           <span className="font-display text-2xl font-semibold text-foreground drop-shadow-sm">
             Unique
@@ -121,14 +119,14 @@ function SignupPage() {
           <div className="mb-6 text-center">
             <h1 className="font-display text-3xl font-semibold">Join Unique</h1>
             <p className="mt-1.5 text-sm text-muted-foreground">
-              Made with your hands? You belong here.
+              Every maker has a place here — no experience required.
             </p>
           </div>
 
           <form onSubmit={onSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label>I'm joining as a…</Label>
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-2 gap-2">
                 {ACCOUNT_OPTIONS.map(({ value, label, desc, icon: Icon }) => {
                   const active = accountType === value;
                   return (
@@ -139,8 +137,8 @@ function SignupPage() {
                       className={cn(
                         "flex flex-col items-center gap-1.5 rounded-xl border-2 p-3 text-center transition-all",
                         active
-                          ? "border-transparent bg-gradient-brand text-foreground shadow-soft"
-                          : "border-border/60 bg-background/60 hover:border-brand-pink/60",
+                          ? "border-transparent bg-gradient-brand text-white shadow-soft"
+                          : "border-border/60 bg-background/60 hover:border-brand-purple/60",
                       )}
                     >
                       <Icon className="h-5 w-5" strokeWidth={2.2} />
@@ -180,23 +178,53 @@ function SignupPage() {
 
             <div className="space-y-1.5">
               <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                autoComplete="new-password"
-                required
-                minLength={6}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="At least 6 characters"
-                className="h-11 rounded-xl bg-background/70"
-              />
+              <div className="relative">
+                <Input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  autoComplete="new-password"
+                  required
+                  minLength={8}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="At least 8 characters"
+                  className="h-11 rounded-xl bg-background/70 pr-11"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((v) => !v)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
+              </div>
             </div>
+
+            {/* Terms agreement */}
+            <label className="flex items-start gap-3 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={agreedToTerms}
+                onChange={(e) => setAgreedToTerms(e.target.checked)}
+                className="mt-0.5 h-4 w-4 rounded border-border accent-brand-purple"
+              />
+              <span className="text-xs text-muted-foreground leading-relaxed">
+                I agree to the{" "}
+                <Link
+                  to="/terms"
+                  target="_blank"
+                  className="text-foreground underline underline-offset-4 hover:opacity-80"
+                >
+                  Terms and Conditions
+                </Link>
+              </span>
+            </label>
 
             <Button
               type="submit"
               disabled={submitting}
-              className="h-11 w-full rounded-xl bg-gradient-brand text-base font-semibold text-foreground shadow-soft hover:opacity-95"
+              className="h-11 w-full rounded-xl bg-gradient-brand text-base font-semibold text-white shadow-soft hover:opacity-95"
             >
               {submitting ? <Loader2 className="h-4 w-4 animate-spin" /> : "Create account"}
             </Button>

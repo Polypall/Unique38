@@ -16,6 +16,14 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as PostPostIdRouteImport } from './routes/post.$postId'
 import { Route as GSlugRouteImport } from './routes/g.$slug'
+import { Route as TermsRouteImport } from './routes/terms'
+import { Route as WaitlistRouteImport } from './routes/waitlist'
+import { Route as ConfirmEmailRouteImport } from './routes/confirm-email'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as AiMatchRouteImport } from './routes/ai-match'
+import { Route as MatchHistoryRouteImport } from './routes/match-history'
+import { Route as ProfileUserIdRouteImport } from './routes/profile.$userId'
 
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
@@ -52,6 +60,46 @@ const GSlugRoute = GSlugRouteImport.update({
   path: '/g/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WaitlistRoute = WaitlistRouteImport.update({
+  id: '/waitlist',
+  path: '/waitlist',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfirmEmailRoute = ConfirmEmailRouteImport.update({
+  id: '/confirm-email',
+  path: '/confirm-email',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiMatchRoute = AiMatchRouteImport.update({
+  id: '/ai-match',
+  path: '/ai-match',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MatchHistoryRoute = MatchHistoryRouteImport.update({
+  id: '/match-history',
+  path: '/match-history',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileUserIdRoute = ProfileUserIdRouteImport.update({
+  id: '/profile/$userId',
+  path: '/profile/$userId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -61,6 +109,14 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/g/$slug': typeof GSlugRoute
   '/post/$postId': typeof PostPostIdRoute
+  '/terms': typeof TermsRoute
+  '/waitlist': typeof WaitlistRoute
+  '/confirm-email': typeof ConfirmEmailRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/ai-match': typeof AiMatchRoute
+  '/match-history': typeof MatchHistoryRoute
+  '/profile/$userId': typeof ProfileUserIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -70,6 +126,14 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/g/$slug': typeof GSlugRoute
   '/post/$postId': typeof PostPostIdRoute
+  '/terms': typeof TermsRoute
+  '/waitlist': typeof WaitlistRoute
+  '/confirm-email': typeof ConfirmEmailRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/ai-match': typeof AiMatchRoute
+  '/match-history': typeof MatchHistoryRoute
+  '/profile/$userId': typeof ProfileUserIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -80,6 +144,14 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/g/$slug': typeof GSlugRoute
   '/post/$postId': typeof PostPostIdRoute
+  '/terms': typeof TermsRoute
+  '/waitlist': typeof WaitlistRoute
+  '/confirm-email': typeof ConfirmEmailRoute
+  '/forgot-password': typeof ForgotPasswordRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/ai-match': typeof AiMatchRoute
+  '/match-history': typeof MatchHistoryRoute
+  '/profile/$userId': typeof ProfileUserIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -91,6 +163,14 @@ export interface FileRouteTypes {
     | '/signup'
     | '/g/$slug'
     | '/post/$postId'
+    | '/terms'
+    | '/waitlist'
+    | '/confirm-email'
+    | '/forgot-password'
+    | '/reset-password'
+    | '/ai-match'
+    | '/match-history'
+    | '/profile/$userId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -100,6 +180,14 @@ export interface FileRouteTypes {
     | '/signup'
     | '/g/$slug'
     | '/post/$postId'
+    | '/terms'
+    | '/waitlist'
+    | '/confirm-email'
+    | '/forgot-password'
+    | '/reset-password'
+    | '/ai-match'
+    | '/match-history'
+    | '/profile/$userId'
   id:
     | '__root__'
     | '/'
@@ -109,6 +197,14 @@ export interface FileRouteTypes {
     | '/signup'
     | '/g/$slug'
     | '/post/$postId'
+    | '/terms'
+    | '/waitlist'
+    | '/confirm-email'
+    | '/forgot-password'
+    | '/reset-password'
+    | '/ai-match'
+    | '/match-history'
+    | '/profile/$userId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -119,6 +215,14 @@ export interface RootRouteChildren {
   SignupRoute: typeof SignupRoute
   GSlugRoute: typeof GSlugRoute
   PostPostIdRoute: typeof PostPostIdRoute
+  TermsRoute: typeof TermsRoute
+  WaitlistRoute: typeof WaitlistRoute
+  ConfirmEmailRoute: typeof ConfirmEmailRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
+  AiMatchRoute: typeof AiMatchRoute
+  MatchHistoryRoute: typeof MatchHistoryRoute
+  ProfileUserIdRoute: typeof ProfileUserIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -172,6 +276,62 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/waitlist': {
+      id: '/waitlist'
+      path: '/waitlist'
+      fullPath: '/waitlist'
+      preLoaderRoute: typeof WaitlistRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/confirm-email': {
+      id: '/confirm-email'
+      path: '/confirm-email'
+      fullPath: '/confirm-email'
+      preLoaderRoute: typeof ConfirmEmailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-match': {
+      id: '/ai-match'
+      path: '/ai-match'
+      fullPath: '/ai-match'
+      preLoaderRoute: typeof AiMatchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/match-history': {
+      id: '/match-history'
+      path: '/match-history'
+      fullPath: '/match-history'
+      preLoaderRoute: typeof MatchHistoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile/$userId': {
+      id: '/profile/$userId'
+      path: '/profile/$userId'
+      fullPath: '/profile/$userId'
+      preLoaderRoute: typeof ProfileUserIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -183,6 +343,14 @@ const rootRouteChildren: RootRouteChildren = {
   SignupRoute: SignupRoute,
   GSlugRoute: GSlugRoute,
   PostPostIdRoute: PostPostIdRoute,
+  TermsRoute: TermsRoute,
+  WaitlistRoute: WaitlistRoute,
+  ConfirmEmailRoute: ConfirmEmailRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
+  AiMatchRoute: AiMatchRoute,
+  MatchHistoryRoute: MatchHistoryRoute,
+  ProfileUserIdRoute: ProfileUserIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
